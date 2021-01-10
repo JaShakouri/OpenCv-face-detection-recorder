@@ -1,0 +1,4 @@
+#Sun Jan 10 17:40:16 IRST 2021
+base.0=/media/android/Software/Javad Shakouri/Android Studio Project/OpenCV/open-cv/build/intermediates/dex/debug/mergeDexDebug/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
