@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/media/android/Software/Javad Shakouri/Android Studio Project/OpenCV/open-cv/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+            "outputFile": "/media/android/Software/Javad Shakouri/Android Studio Project/OpenCV/OpenCV/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
             "map": [
                 {
-                    "source": "/media/android/Software/Javad Shakouri/Android Studio Project/OpenCV/open-cv/src/main/res/values/attrs.xml",
+                    "source": "/media/android/Software/Javad Shakouri/Android Studio Project/OpenCV/OpenCV/src/main/res/values/attrs.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

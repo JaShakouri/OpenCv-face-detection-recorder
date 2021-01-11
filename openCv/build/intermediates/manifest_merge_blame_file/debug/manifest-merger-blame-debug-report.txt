@@ -2,9 +2,10 @@
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="org.opencv" >
 4
-5    <uses-sdk android:minSdkVersion="1" />
-5-->/media/android/Software/Javad Shakouri/Android Studio Project/OpenCV/open-cv/src/main/AndroidManifest.xml
-6
-7    <application />
+5    <uses-sdk
+6        android:minSdkVersion="14"
+6-->/media/android/Software/Javad Shakouri/Android Studio Project/OpenCV/openCv/src/main/AndroidManifest.xml
+7        android:targetSdkVersion="30" />
+7-->/media/android/Software/Javad Shakouri/Android Studio Project/OpenCV/openCv/src/main/AndroidManifest.xml
 8
 9</manifest>

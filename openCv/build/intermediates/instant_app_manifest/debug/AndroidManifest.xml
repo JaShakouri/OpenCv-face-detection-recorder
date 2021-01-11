@@ -3,7 +3,9 @@
     package="org.opencv"
     android:targetSandboxVersion="2" >
 
-    <uses-sdk android:minSdkVersion="1" />
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="30" />
 
     <application />
 

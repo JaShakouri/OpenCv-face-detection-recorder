@@ -1,7 +1,7 @@
 {
   "version": 1,
   "applicationId": "org.opencv",
-  "variantType": "BASE_APK",
+  "variantType": "LIBRARY",
   "elements": [
     {
       "outputType": {
@@ -11,16 +11,15 @@
         "type": "MAIN",
         "splits": [],
         "versionCode": -1,
-        "outputFile": "open-cv-debug.apk",
+        "outputFile": "openCv-debug.aar",
         "fullName": "debug",
         "baseName": "debug",
         "dirName": ""
       },
-      "path": "AndroidManifest.xml",
+      "path": "../../library_manifest/debug/AndroidManifest.xml",
       "properties": {
         "packageId": "org.opencv",
-        "split": "",
-        "minSdkVersion": "1"
+        "split": ""
       }
     }
   ]
