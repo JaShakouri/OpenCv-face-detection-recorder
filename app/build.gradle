@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 30
@@ -7,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "ir.jashakouri.opencvproject"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -22,8 +23,13 @@ android {
         }
     }
 
-    buildFeatures {
-        viewBinding true
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'x86_64', 'armeabi', 'armeabi-v7a', 'mips', 'mips64', 'arm64-v8a'
+            universalApk false
+        }
     }
 
 }
@@ -34,7 +40,10 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation "androidx.cardview:cardview:1.0.0"
 
-    implementation project(path: ':openCv')
+    implementation 'com.github.kongqw:PermissionsManager:1.1.0'
+
+    implementation project(path: ':OpenCVLibrary')
 
 }

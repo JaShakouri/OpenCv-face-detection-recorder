@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Face Detection</string>
+    <string name="str_switch">Switch</string>
 </resources>
