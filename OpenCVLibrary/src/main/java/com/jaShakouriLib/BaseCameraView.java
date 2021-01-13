@@ -30,6 +30,7 @@ public abstract class BaseCameraView extends JavaCameraView implements LoaderCal
     // 标记当前OpenCV加载状态
     private boolean isLoadSuccess;
     protected Mat mRgba;
+    protected Mat mRgbaT;
     protected Mat mGray;
 
     // 控制切换摄像头
@@ -100,12 +101,14 @@ public abstract class BaseCameraView extends JavaCameraView implements LoaderCal
     public void onCameraViewStarted(int width, int height) {
         mGray = new Mat();
         mRgba = new Mat();
+        mRgbaT = new Mat();
     }
 
     @Override
     public void onCameraViewStopped() {
         mGray.release();
         mRgba.release();
+        mRgbaT.release();
     }
 
     @Override

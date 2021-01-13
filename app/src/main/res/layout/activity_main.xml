@@ -7,55 +7,41 @@
     android:animateLayoutChanges="true">
 
     <com.jaShakouriLib.ObjectDetectingView
-        android:id="@+id/photograph_view"
+        android:id="@+id/camera_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:camera_id="front"
+        app:show_fps="false" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardToolbar"
-        android:layout_width="250dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center|left"
         android:layout_margin="16dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         tools:ignore="RtlHardcoded">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="250dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tvStatus"
-                android:layout_width="150dp"
-                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
-                android:text="Recording 00:05"
                 android:textAllCaps="false"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:background="@drawable/shape_primary_button"
-                android:drawableTop="@drawable/ic_photo_camera"
-                android:drawablePadding="4dp"
-                android:onClick="swapCamera"
-                android:scaleType="fitCenter"
-                android:text="@string/str_switch"
-                android:textAllCaps="false"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Recording 00:05" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

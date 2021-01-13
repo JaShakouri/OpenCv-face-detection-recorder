@@ -35,6 +35,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
 
+        <activity android:name=".view.base.BaseActivity" />
+
         <activity
             android:name=".view.activity.OverViewActivity"
             android:screenOrientation="portrait">
@@ -48,7 +50,7 @@
         <activity
             android:name=".view.activity.MainActivity"
             android:screenOrientation="landscape" />
-
+        
     </application>
 
 </manifest>
