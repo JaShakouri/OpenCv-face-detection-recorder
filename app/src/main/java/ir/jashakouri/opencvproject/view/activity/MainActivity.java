@@ -125,6 +125,8 @@ public class MainActivity extends BaseActivity {
                         @Override
                         public void onFinish() {
                             tvStatus.setText("recording 00:05 finished");
+                            countDownTimer.cancel();
+                            countDownTimer = null;
                         }
                     };
 
