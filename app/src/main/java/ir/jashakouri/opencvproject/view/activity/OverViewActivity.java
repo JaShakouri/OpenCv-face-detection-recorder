@@ -3,6 +3,7 @@ package ir.jashakouri.opencvproject.view.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.kongqw.permissionslibrary.PermissionsManager;
 
@@ -11,7 +12,11 @@ import ir.jashakouri.opencvproject.view.base.BaseActivity;
 
 public class OverViewActivity extends BaseActivity {
 
-    private String[] PERMISSIONS = new String[]{Manifest.permission.CAMERA};
+    private String[] PERMISSIONS = new String[]{
+            Manifest.permission.CAMERA,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE };
 
     private int REQUEST_CODE_DETECTION = 1001;
 
@@ -22,7 +27,7 @@ public class OverViewActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        checkPermissions();
+
     }
 
     private void checkPermissions() {
@@ -30,7 +35,7 @@ public class OverViewActivity extends BaseActivity {
             @Override
             public void authorized(int requestCode) {
                 if (requestCode == REQUEST_CODE_DETECTION)
-                    startActivity(new Intent(OverViewActivity.this, MainActivity.class));
+                    startActivity(new Intent(OverViewActivity.this, FaceDetectionActivity.class));
 
                 finish();
             }
@@ -49,4 +54,7 @@ public class OverViewActivity extends BaseActivity {
         mPermissionsManager.checkPermissions(REQUEST_CODE_DETECTION, PERMISSIONS);
     }
 
+    public void ready(View view) {
+        checkPermissions();
+    }
 }

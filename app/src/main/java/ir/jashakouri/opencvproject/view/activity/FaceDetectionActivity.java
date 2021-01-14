@@ -20,7 +20,7 @@ import org.opencv.core.Scalar;
 import ir.jashakouri.opencvproject.R;
 import ir.jashakouri.opencvproject.view.base.BaseActivity;
 
-public class MainActivity extends BaseActivity {
+public class FaceDetectionActivity extends BaseActivity {
 
     /**
      * ObjectDetector : Object Detection is a algorithm face detection

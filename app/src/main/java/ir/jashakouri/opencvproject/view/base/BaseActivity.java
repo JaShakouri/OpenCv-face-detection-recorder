@@ -1,12 +1,6 @@
 package ir.jashakouri.opencvproject.view.base;
 
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,7 +8,13 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.kongqw.permissionslibrary.PermissionsManager;
+
+import ir.jashakouri.opencvproject.utils.StatusBarUtils;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -31,6 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(layout());
         init(savedInstanceState);
+        StatusBarUtils.setLightStatusBar(this);
     }
 
     /**
@@ -48,7 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void showPermissionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Request permission");
-        builder.setMessage("Android 6.0+ dynamically request camera permissions");
+        builder.setMessage("Application need request camera, storage, voice recorder permissions");
         builder.setPositiveButton("Go to set permissions", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

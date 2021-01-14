@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Face Detection</string>
     <string name="str_switch">Switch</string>
+    <string name="i_m_ready">Im Ready</string>
+    <string name="overView">OpenCV Library</string>
+    <string name="overView_2">This project can detect face and record face for 5 second</string>
 </resources>
