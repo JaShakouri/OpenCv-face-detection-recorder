@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+
+    <external-path
+        name="public_path"
+        path="/" />
+
+    <external-path
+        name="video_path"
+        path="Face Detection/video/" />
+
+</paths>

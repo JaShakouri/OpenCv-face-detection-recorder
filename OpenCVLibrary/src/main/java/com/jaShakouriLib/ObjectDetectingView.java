@@ -4,14 +4,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 
-import com.jaShakouriLib.listener.OnCalcBackProjectListener;
 import com.jaShakouriLib.listener.OnObjectTrackingListener;
 
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
-import org.opencv.core.Point;
 import org.opencv.core.Rect;
-import org.opencv.core.RotatedRect;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
@@ -59,14 +56,15 @@ public class ObjectDetectingView extends BaseCameraView {
             if (object != null) {
 
                 if (lastTimeStamp < System.currentTimeMillis()) {
-                    lastTimeStamp = System.currentTimeMillis() + 5000;
 
                     if (mOnObjectTrackingListener != null) {
 
                         if (object.length > 0) {
                             mOnObjectTrackingListener.onObjectLocation(null);
+                            lastTimeStamp = System.currentTimeMillis() + 3000;
                         } else {
                             mOnObjectTrackingListener.onObjectLost();
+                            lastTimeStamp = System.currentTimeMillis() + 1000;
                         }
                     }
                 }

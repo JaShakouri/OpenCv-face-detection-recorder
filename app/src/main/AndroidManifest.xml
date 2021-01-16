@@ -4,6 +4,7 @@
     package="ir.jashakouri.opencvproject">
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,8 +14,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
 
-        <activity android:name=".view.base.BaseActivity" />
+        <activity android:name=".view.activity.PlayerActivity"/>
 
+        <activity android:name=".view.base.BaseActivity" />
         <activity
             android:name=".view.activity.OverViewActivity"
             android:screenOrientation="portrait">
@@ -24,11 +26,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".view.activity.FaceDetectionActivity"
             android:screenOrientation="landscape" />
-        
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

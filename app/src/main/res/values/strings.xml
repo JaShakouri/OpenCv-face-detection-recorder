@@ -4,4 +4,7 @@
     <string name="i_m_ready">Im Ready</string>
     <string name="overView">OpenCV Library</string>
     <string name="overView_2">This project can detect face and record face for 5 second</string>
+    <string name="finding_face">Finding face</string>
+    <string name="str_record_finish">Record Finish</string>
+    <string name="str_recording_time">Recording %s</string>
 </resources>
