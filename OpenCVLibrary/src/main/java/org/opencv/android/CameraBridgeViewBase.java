@@ -1,11 +1,5 @@
 package org.opencv.android;
 
-import java.util.List;
-
-import org.opencv.BuildConfig;
-import org.opencv.R;
-import org.opencv.core.Mat;
-import org.opencv.core.Size;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -14,15 +8,23 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.media.MediaRecorder;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import org.opencv.BuildConfig;
+import org.opencv.R;
+import org.opencv.core.Mat;
+import org.opencv.core.Size;
+
+import java.util.List;
+
 /**
  * The following 2 (MediaRecorder and Surface) were added to the imports
  */
-import android.media.MediaRecorder;
-import android.view.Surface;
 
 
 /**
@@ -67,9 +69,13 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
     protected MediaRecorder mRecorder;
     protected Surface mSurface = null;
     public void setRecorder(MediaRecorder rec) {
-        mRecorder = rec;
-        if (mRecorder != null) {
-            mSurface = mRecorder.getSurface();
+        try {
+            mRecorder = rec;
+            if (mRecorder != null) {
+                mSurface = mRecorder.getSurface();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -427,22 +433,24 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
          * The following section was added
          */
         if (bmpValid && mCacheBitmap != null) {
-            Canvas canvas;
+            Canvas canvas = null;
 
             if (mRecorder != null) {
-                canvas = mSurface.lockCanvas(null);
 
-                canvas.drawColor(0, android.graphics.PorterDuff.Mode.CLEAR);
-                Log.d(TAG, "mStretch value: " + mScale);
+                if (mSurface != null) {
+                    canvas = mSurface.lockCanvas(null);
+                    canvas.drawColor(0, android.graphics.PorterDuff.Mode.CLEAR);
+                    Log.d(TAG, "mStretch value: " + mScale);
+                }
 
                 if (mScale != 0) {
-                    canvas.drawBitmap(mCacheBitmap, new Rect(0,0,mCacheBitmap.getWidth(), mCacheBitmap.getHeight()),
-                            new Rect((int)((canvas.getWidth() - mScale*mCacheBitmap.getWidth()) / 2),
-                                    (int)((canvas.getHeight() - mScale*mCacheBitmap.getHeight()) / 2),
-                                    (int)((canvas.getWidth() - mScale*mCacheBitmap.getWidth()) / 2 + mScale*mCacheBitmap.getWidth()),
-                                    (int)((canvas.getHeight() - mScale*mCacheBitmap.getHeight()) / 2 + mScale*mCacheBitmap.getHeight())), null);
+                    canvas.drawBitmap(mCacheBitmap, new Rect(0, 0, mCacheBitmap.getWidth(), mCacheBitmap.getHeight()),
+                            new Rect((int) ((canvas.getWidth() - mScale * mCacheBitmap.getWidth()) / 2),
+                                    (int) ((canvas.getHeight() - mScale * mCacheBitmap.getHeight()) / 2),
+                                    (int) ((canvas.getWidth() - mScale * mCacheBitmap.getWidth()) / 2 + mScale * mCacheBitmap.getWidth()),
+                                    (int) ((canvas.getHeight() - mScale * mCacheBitmap.getHeight()) / 2 + mScale * mCacheBitmap.getHeight())), null);
                 } else {
-                    canvas.drawBitmap(mCacheBitmap, new Rect(0,0,mCacheBitmap.getWidth(), mCacheBitmap.getHeight()),
+                    canvas.drawBitmap(mCacheBitmap, new Rect(0, 0, mCacheBitmap.getWidth(), mCacheBitmap.getHeight()),
                             new Rect((canvas.getWidth() - mCacheBitmap.getWidth()) / 2,
                                     (canvas.getHeight() - mCacheBitmap.getHeight()) / 2,
                                     (canvas.getWidth() - mCacheBitmap.getWidth()) / 2 + mCacheBitmap.getWidth(),
@@ -453,7 +461,13 @@ public abstract class CameraBridgeViewBase extends SurfaceView implements Surfac
                     mFpsMeter.measure();
                     mFpsMeter.draw(canvas, 20, 30);
                 }
-                mSurface.unlockCanvasAndPost(canvas);
+
+                try {
+                    if (mSurface != null)
+                        mSurface.unlockCanvasAndPost(canvas);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         }
 

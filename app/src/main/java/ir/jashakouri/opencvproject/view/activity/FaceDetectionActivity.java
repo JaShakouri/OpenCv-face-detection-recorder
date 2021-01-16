@@ -214,10 +214,10 @@ public class FaceDetectionActivity extends BaseActivity implements OnRecordVideo
             Log.d(TAG, "processCapture Stop recorder");
 
             if (mMediaRecorder != null) {
-
                 mMediaRecorder.stop();
                 mMediaRecorder.release();
-                detectingView.setRecorder(null);
+                mMediaRecorder = null;
+                detectingView.setRecorder(mMediaRecorder);
 
                 onRecord(mOutputFile);
             }
@@ -279,11 +279,17 @@ public class FaceDetectionActivity extends BaseActivity implements OnRecordVideo
     @Override
     public void onRecord(File file) {
 
+        Log.i(TAG, "onRecord: file path : " + file.getAbsolutePath());
+        Log.i(TAG, "onRecord: file size : " + file.length());
+
+        PlayerActivity.start(this, file.getAbsolutePath());
 
     }
 
     @Override
     public void onRecordFailure() {
+
+        Log.i(TAG, "onRecordFailure");
 
     }
 }
