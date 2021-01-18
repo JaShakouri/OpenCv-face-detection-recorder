@@ -225,7 +225,7 @@ public class FaceDetectionActivity extends BaseActivity implements OnRecordVideo
                 mMediaRecorder.stop();
                 mMediaRecorder.release();
                 mMediaRecorder = null;
-                detectingView.setRecorder(mMediaRecorder);
+                detectingView.setRecorder(null);
 
                 onRecord(mOutputFile);
             }
@@ -271,11 +271,11 @@ public class FaceDetectionActivity extends BaseActivity implements OnRecordVideo
             mMediaRecorder.stop();
             mMediaRecorder.release();
             mMediaRecorder = null;
-            detectingView.setRecorder(mMediaRecorder);
+            detectingView.setRecorder(null);
             onRecordFailure();
 
-            if (mOutputFile != null && mOutputFile.exists()) {
-                mOutputFile.delete();
+            if (mOutputFile != null && mOutputFile.exists() && mOutputFile.delete()) {
+                Toast.makeText(this, R.string.str_file_deleted, Toast.LENGTH_SHORT).show();
             }
 
         }

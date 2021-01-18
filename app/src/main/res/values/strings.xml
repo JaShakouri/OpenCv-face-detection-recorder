@@ -13,4 +13,5 @@
     <string name="str_delete_description">Do you want to delete the video?</string>
     <string name="str_deleted">File Deleted</string>
     <string name="str_delete_failure">Delete Failure</string>
+    <string name="str_file_deleted">File Deleted</string>
 </resources>
