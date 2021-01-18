@@ -20,6 +20,8 @@ import com.jaShakouriLib.listener.OnOpenCVLoadListener;
 import com.jaShakouriLib.listener.OnRecordVideo;
 import com.jaShakouriLib.recorder.CameraHelper;
 
+import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 
@@ -105,7 +107,13 @@ public class FaceDetectionActivity extends BaseActivity implements OnRecordVideo
 
             @Override
             public void onNotInstallOpenCVManager() {
-                showInstallDialog();
+
+                if (OpenCVLoader.initDebug()) {
+                    detectingView.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+                } else {
+                    showInstallDialog();
+                }
+
             }
         });
 

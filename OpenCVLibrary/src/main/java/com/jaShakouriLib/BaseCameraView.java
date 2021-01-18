@@ -89,7 +89,7 @@ public abstract class BaseCameraView extends JavaCameraView implements LoaderCal
     @Override
     public void onPackageInstall(int operation, InstallCallbackInterface callback) {
         // OpenCV Manager 没有安装
-        Log.i(TAG, "onPackageInstall: ");
+        Log.i(TAG, "onPackageInstall: " + operation);
 
         // Toast.makeText(getContext(), "OpenCV Manager 没有安装", Toast.LENGTH_SHORT).show();
         if (null != mOnOpenCVLoadListener) {

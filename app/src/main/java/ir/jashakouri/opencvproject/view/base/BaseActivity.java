@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -13,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.kongqw.permissionslibrary.PermissionsManager;
+
+import org.opencv.android.OpenCVLoader;
 
 import ir.jashakouri.opencvproject.utils.StatusBarUtils;
 

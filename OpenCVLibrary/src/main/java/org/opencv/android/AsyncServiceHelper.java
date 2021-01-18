@@ -16,6 +16,7 @@ import java.io.File;
 import java.util.StringTokenizer;
 
 class AsyncServiceHelper {
+
     public static boolean initOpenCV(String Version, final Context AppContext, final LoaderCallbackInterface Callback) {
         AsyncServiceHelper helper = new AsyncServiceHelper(Version, AppContext, Callback);
         Intent intent = new Intent("org.opencv.engine.BIND");
