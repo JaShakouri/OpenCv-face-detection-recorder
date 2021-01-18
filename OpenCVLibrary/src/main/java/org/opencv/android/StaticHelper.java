@@ -27,7 +27,7 @@ class StaticHelper {
             System.loadLibrary("opencv_info");
             libs = getLibraryList();
         } catch (UnsatisfiedLinkError e) {
-            Log.e(TAG, "OpenCV error: Cannot load info library for OpenCV " + e.toString(), e);
+            Log.e(TAG, "OpenCV error: Cannot load info library for OpenCV");
         }
 
         Log.d(TAG, "Library list: \"" + libs + "\"");
