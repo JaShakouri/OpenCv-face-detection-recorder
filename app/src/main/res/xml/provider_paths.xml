@@ -3,10 +3,6 @@
 
     <external-path
         name="public_path"
-        path="/" />
-
-    <external-path
-        name="video_path"
-        path="Face Detection/video/" />
+        path="." />
 
 </paths>

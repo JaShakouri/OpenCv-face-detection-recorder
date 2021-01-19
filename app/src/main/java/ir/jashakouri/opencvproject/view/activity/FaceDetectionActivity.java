@@ -267,17 +267,23 @@ public class FaceDetectionActivity extends BaseActivity implements OnRecordVideo
 
         Log.d(TAG, "Stop recorder");
 
-        if (mMediaRecorder != null) {
-            mMediaRecorder.stop();
-            mMediaRecorder.release();
-            mMediaRecorder = null;
-            detectingView.setRecorder(null);
-            onRecordFailure();
+        try {
 
-            if (mOutputFile != null && mOutputFile.exists() && mOutputFile.delete()) {
-                Toast.makeText(this, R.string.str_file_deleted, Toast.LENGTH_SHORT).show();
+            if (mMediaRecorder != null) {
+                mMediaRecorder.stop();
+                mMediaRecorder.release();
+                mMediaRecorder = null;
+                detectingView.setRecorder(null);
+                onRecordFailure();
+
+                if (mOutputFile != null && mOutputFile.exists() && mOutputFile.delete()) {
+                    Toast.makeText(this, R.string.str_file_deleted, Toast.LENGTH_SHORT).show();
+                }
+
             }
 
+        } catch (Exception ex) {
+            Log.e(TAG, "stopCapture: " + ex.toString(), ex);
         }
 
         isRecording = false;

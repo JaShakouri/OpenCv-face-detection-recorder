@@ -9,6 +9,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -19,7 +20,9 @@ import androidx.core.content.FileProvider;
 
 import java.io.File;
 
+import ir.jashakouri.opencvproject.BuildConfig;
 import ir.jashakouri.opencvproject.R;
+import ir.jashakouri.opencvproject.utils.Utils;
 import ir.jashakouri.opencvproject.view.base.BaseActivity;
 
 public class PlayerActivity extends BaseActivity implements View.OnClickListener {
@@ -111,15 +114,7 @@ public class PlayerActivity extends BaseActivity implements View.OnClickListener
             case R.id.ibShare:
 
                 File videoFile = new File(path);
-                Uri videoURI = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-                        ? FileProvider.getUriForFile(this,
-                        getPackageName() + ".provider", videoFile)
-                        : Uri.fromFile(videoFile);
-                ShareCompat.IntentBuilder.from(this)
-                        .setStream(videoURI)
-                        .setType("video/mp4")
-                        .setChooserTitle("Share video...")
-                        .startChooser();
+                Utils.shareFile(this, videoFile);
 
                 break;
 

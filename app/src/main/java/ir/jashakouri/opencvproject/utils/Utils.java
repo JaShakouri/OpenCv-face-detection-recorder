@@ -1,10 +1,17 @@
 package ir.jashakouri.opencvproject.utils;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
+
+import androidx.core.content.FileProvider;
 
 import java.io.File;
 
+import ir.jashakouri.opencvproject.BuildConfig;
 import ir.jashakouri.opencvproject.utils.appEnum.FileDirectory;
 
 public class Utils {
@@ -70,6 +77,31 @@ public class Utils {
         checkFolder();
         return new File(getFileResource(FileDirectory.Video).getAbsolutePath(),
                 System.currentTimeMillis() + ".mp4");
+    }
+
+    public static void shareFile(Activity activity, File file) {
+        try {
+
+            Uri contentUri = FileProvider.getUriForFile(activity.getApplicationContext(),
+                    BuildConfig.APPLICATION_ID + ".contentprovider", file);
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_STREAM, contentUri);
+            intent.setType(getMimeType(file.getAbsolutePath()));
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            activity.startActivity(intent);
+
+        } catch (Exception e) {
+            Log.e(TAG, e.toString(), e);
+        }
+    }
+
+    public static String getMimeType(String url) {
+        String type = null;
+        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+        if (extension != null) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        }
+        return type;
     }
 
 }
