@@ -1,6 +1,12 @@
 package ir.jashakouri.opencvproject.view.activity;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -63,7 +69,7 @@ public class FaceDetectionActivity extends BaseActivity implements OnRecordVideo
      * @return null
      */
     private ObjectDetectingView detectingView;
-    private CardView cardToolbar;
+    private CardView cardToolbar, cameraToolbar;
     private TextView tvStatus;
     private ProgressBar progress;
     private ImageButton ibPlay;
@@ -71,6 +77,8 @@ public class FaceDetectionActivity extends BaseActivity implements OnRecordVideo
     private MediaRecorder mMediaRecorder;
     private File mOutputFile;
     private boolean isRecording;
+
+    private SensorManager sensorManager;
 
     @Override
     protected int layout() {
@@ -80,17 +88,18 @@ public class FaceDetectionActivity extends BaseActivity implements OnRecordVideo
     @Override
     protected void init(Bundle savedInstanceState) {
         detectingView = findViewById(R.id.camera_view);
+        cameraToolbar = findViewById(R.id.cameraToolbar);
         cardToolbar = findViewById(R.id.cardToolbar);
         tvStatus = findViewById(R.id.tvStatus);
         progress = findViewById(R.id.progress);
         ibPlay = findViewById(R.id.ibPlay);
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
         checkPermissions();
+        sensorRotation();
     }
 
     @Override
@@ -110,6 +119,10 @@ public class FaceDetectionActivity extends BaseActivity implements OnRecordVideo
             detectingView.setOnObjectTrackingListener(null);
 
         }
+
+        if (sensorManager != null)
+            sensorManager.unregisterListener(sensorEventListener);
+
     }
 
     @Override
@@ -347,5 +360,48 @@ public class FaceDetectionActivity extends BaseActivity implements OnRecordVideo
         isRecording = false;
 
     }
+
+    private void sensorRotation() {
+
+        try {
+            if (sensorManager == null)
+                sensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
+
+            sensorManager.registerListener(sensorEventListener,
+                    sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
+
+        } catch (Exception ex) {
+            Log.e(TAG, "sensorRotation: Can not find sensor rotation");
+        }
+    }
+
+    private SensorEventListener sensorEventListener = new SensorEventListener() {
+
+        int orientation = -1;
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            if (event.values[1] < 6.5 && event.values[1] > -6.5) {
+                if (orientation != 1) {
+                    Log.d("Sensor", "Landscape");
+                    cameraToolbar.setVisibility(View.GONE);
+                }
+                orientation = 1;
+            } else {
+                if (orientation != 0) {
+                    Log.d("Sensor", "Portrait");
+                    cameraToolbar.setVisibility(View.VISIBLE);
+                }
+                orientation = 0;
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            // TODO Auto-generated method stub
+
+        }
+
+    };
 
 }

@@ -10,6 +10,7 @@
         android:id="@+id/camera_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
         app:camera_id="front"
         app:show_fps="false" />
 
@@ -33,19 +34,19 @@
                 android:id="@+id/tvStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:minWidth="100dp"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"
+                android:minWidth="100dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/finding_face"
                 android:textAllCaps="false"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="@string/finding_face"
-                app:layout_constraintRight_toLeftOf="@+id/ibPlay" />
+                app:layout_constraintRight_toLeftOf="@+id/ibPlay"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
                 android:id="@+id/ibPlay"
@@ -69,6 +70,27 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cameraToolbar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="bottom|center|end"
+        android:layout_margin="16dp"
+        android:rotation="270"
+        android:visibility="gone"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        tools:ignore="RtlHardcoded">
+
+        <com.cunoraz.gifview.library.GifView
+            android:id="@+id/gif1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:gif="@mipmap/rotate_device" />
 
     </androidx.cardview.widget.CardView>
 

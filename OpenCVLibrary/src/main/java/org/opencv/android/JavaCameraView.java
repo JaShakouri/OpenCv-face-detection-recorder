@@ -1,6 +1,8 @@
 package org.opencv.android;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.ImageFormat;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
@@ -10,7 +12,10 @@ import android.media.MediaRecorder;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Display;
+import android.view.Surface;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 
 import com.jaShakouriLib.listener.OnRecordVideo;
 import com.jaShakouriLib.recorder.CameraHelper;
@@ -51,10 +56,6 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
     private SurfaceTexture mSurfaceTexture;
 
     private boolean mCameraFrameReady = false;
-
-    private boolean isRecording = false;
-    private MediaRecorder mMediaRecorder;
-    private File mOutputFile;
 
     public static class JavaCameraSizeAccessor implements ListItemAccessor {
 
@@ -149,6 +150,7 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
             /* Now set camera parameters */
             try {
                 Camera.Parameters params = mCamera.getParameters();
+                params.set("orientation", "portrait");
                 Log.d(TAG, "getSupportedPreviewSizes()");
                 List<android.hardware.Camera.Size> sizes = params.getSupportedPreviewSizes();
 
@@ -207,10 +209,6 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
 
                     mSurfaceTexture = new SurfaceTexture(MAGIC_TEXTURE_ID);
                     mCamera.setPreviewTexture(mSurfaceTexture);
-
-//                    setDisplayOrientation(mCamera, 90);
-//                    mCamera.setDisplayOrientation(90);
-//                    mCamera.setPreviewDisplay(getHolder());
 
                     /* Finally we are ready to start the preview */
                     Log.d(TAG, "startPreview");
@@ -379,112 +377,42 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
         }
     }
 
-    /*
-    private void releaseMediaRecorder() {
-        if (mMediaRecorder != null) {
-            // clear recorder configuration
-            mMediaRecorder.reset();
-            // release the recorder object
-            mMediaRecorder.release();
-            mMediaRecorder = null;
-            // Lock camera for later use i.e taking it back from MediaRecorder.
-            // MediaRecorder doesn't need it anymore and we will release it if the activity pauses.
-            mCamera.lock();
+    private void setScreenRotationOnPhone() {
+
+        final Display display = ((WindowManager)
+                getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+
+        switch (display.getRotation()) {
+            case Surface.ROTATION_0:
+                System.out.println("SCREEN_ORIENTATION_PORTRAIT");
+                setDisplayOrientation(mCamera, 90);
+                try {
+                    mCamera.setDisplayOrientation(90);
+                    mCamera.setPreviewDisplay(getHolder());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case Surface.ROTATION_90:
+                System.out.println("SCREEN_ORIENTATION_LANDSCAPE");
+                break;
+
+            case Surface.ROTATION_180:
+                System.out.println("SCREEN_ORIENTATION_REVERSE_PORTRAIT");
+                break;
+
+            case Surface.ROTATION_270:
+                System.out.println("SCREEN_ORIENTATION_REVERSE_LANDSCAPE");
+                setDisplayOrientation(mCamera, 180);
+                try {
+                    mCamera.setDisplayOrientation(180);
+                    mCamera.setPreviewDisplay(getHolder());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
     }
-
-    private boolean prepareVideoRecorder() {
-
-        mMediaRecorder = new MediaRecorder();
-
-        // Step 1: Unlock and set camera to MediaRecorder
-        mCamera.unlock();
-        mMediaRecorder.setCamera(mCamera);
-
-        // Step 2: Set sources
-        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
-        mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-
-        // Step 3: Set a CamcorderProfile (requires API Level 8 or higher)
-        mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
-
-        // Step 4: Set output file
-        mOutputFile = CameraHelper.getOutputMediaFile(CameraHelper.MEDIA_TYPE_VIDEO);
-        if (mOutputFile == null) {
-            return false;
-        }
-        mMediaRecorder.setOutputFile(mOutputFile.getPath());
-
-        try {
-            mMediaRecorder.prepare();
-        } catch (IllegalStateException e) {
-            Log.d(TAG, "IllegalStateException preparing MediaRecorder: " + e.getMessage());
-            releaseMediaRecorder();
-            return false;
-        } catch (IOException e) {
-            Log.d(TAG, "IOException preparing MediaRecorder: " + e.getMessage());
-            releaseMediaRecorder();
-            return false;
-        }
-
-        return true;
-    }
-
-    public void processCapture(OnRecordVideo onRecordVideo) {
-
-        if (isRecording) {
-            // BEGIN_INCLUDE(stop_release_media_recorder)
-
-            // stop recording and release camera
-            try {
-                mMediaRecorder.stop();  // stop the recording
-
-                onRecordVideo.onRecord(mOutputFile);
-            } catch (RuntimeException e) {
-                // RuntimeException is thrown when stop() is called immediately after start().
-                // In this case the output file is not properly constructed ans should be deleted.
-                Log.d(TAG, "RuntimeException: stop() is called immediately after start()");
-                //noinspection ResultOfMethodCallIgnored
-                mOutputFile.delete();
-
-                onRecordVideo.onRecordFailure();
-
-            }
-            releaseMediaRecorder(); // release the MediaRecorder object
-            mCamera.lock();         // take camera access back from MediaRecorder
-
-            isRecording = false;
-            releaseCamera();
-            // END_INCLUDE(stop_release_media_recorder)
-
-            connectCamera(mFrameWidth, mFrameHeight);
-
-        } else {
-
-            if (prepareVideoRecorder()) {
-                // Camera is available and unlocked, MediaRecorder is prepared,
-                // now you can start recording
-
-                mMediaRecorder.start();
-
-                isRecording = true;
-
-            } else {
-                // prepare didn't work, release the camera
-                releaseMediaRecorder();
-            }
-
-        }
-
-    }
-
-    public void stopCapture(OnRecordVideo onRecordVideo) {
-
-        if (isRecording) {
-            processCapture(onRecordVideo);
-        }
-
-    }
-     */
 
 }
