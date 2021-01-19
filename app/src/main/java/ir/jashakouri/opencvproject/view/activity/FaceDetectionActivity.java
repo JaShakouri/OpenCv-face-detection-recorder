@@ -1,5 +1,6 @@
 package ir.jashakouri.opencvproject.view.activity;
 
+import android.Manifest;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import com.jaShakouriLib.listener.OnObjectTrackingListener;
 import com.jaShakouriLib.listener.OnOpenCVLoadListener;
 import com.jaShakouriLib.listener.OnRecordVideo;
 import com.jaShakouriLib.recorder.CameraHelper;
+import com.kongqw.permissionslibrary.PermissionsManager;
 
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
@@ -34,6 +36,14 @@ import ir.jashakouri.opencvproject.view.base.BaseActivity;
 public class FaceDetectionActivity extends BaseActivity implements OnRecordVideo {
 
     private static final String TAG = "FaceDetection";
+
+    private String[] PERMISSIONS = new String[]{
+            Manifest.permission.CAMERA,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+    private int REQUEST_CODE_DETECTION = 1001;
 
     /**
      * ObjectDetector : Object Detection is a algorithm face detection
@@ -74,6 +84,48 @@ public class FaceDetectionActivity extends BaseActivity implements OnRecordVideo
         tvStatus = findViewById(R.id.tvStatus);
         progress = findViewById(R.id.progress);
         ibPlay = findViewById(R.id.ibPlay);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkPermissions();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (detectingView != null) {
+
+            if (mMediaRecorder != null) {
+                mMediaRecorder.stop();
+                mMediaRecorder.release();
+                mMediaRecorder = null;
+                detectingView.setRecorder(null);
+            }
+
+            detectingView.disableView();
+            detectingView.setOnObjectTrackingListener(null);
+
+        }
+    }
+
+    @Override
+    public void onRecord(File file) {
+
+        Log.i(TAG, "onRecord: file path : " + file.getAbsolutePath());
+        Log.i(TAG, "onRecord: file size : " + file.length());
+
+        PlayerActivity.start(this, file.getAbsolutePath());
+
+    }
+
+    @Override
+    public void onRecordFailure() {
+
+        Log.i(TAG, "onRecordFailure");
 
     }
 
@@ -135,20 +187,26 @@ public class FaceDetectionActivity extends BaseActivity implements OnRecordVideo
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        initOpenCV();
-    }
+    private void checkPermissions() {
+        mPermissionsManager = new PermissionsManager(this) {
+            @Override
+            public void authorized(int requestCode) {
+                if (requestCode == REQUEST_CODE_DETECTION)
+                    initOpenCV();
+            }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
+            @Override
+            public void noAuthorization(int i, String[] strings) {
+                showPermissionDialog();
+            }
 
-        if (detectingView != null) {
-            detectingView.disableView();
-            detectingView.setOnObjectTrackingListener(null);
-        }
+            @Override
+            public void ignore(int requestCode) {
+                authorized(requestCode);
+            }
+
+        };
+        mPermissionsManager.checkPermissions(REQUEST_CODE_DETECTION, PERMISSIONS);
     }
 
     private void startRecord() {
@@ -290,20 +348,4 @@ public class FaceDetectionActivity extends BaseActivity implements OnRecordVideo
 
     }
 
-    @Override
-    public void onRecord(File file) {
-
-        Log.i(TAG, "onRecord: file path : " + file.getAbsolutePath());
-        Log.i(TAG, "onRecord: file size : " + file.length());
-
-        PlayerActivity.start(this, file.getAbsolutePath());
-
-    }
-
-    @Override
-    public void onRecordFailure() {
-
-        Log.i(TAG, "onRecordFailure");
-
-    }
 }

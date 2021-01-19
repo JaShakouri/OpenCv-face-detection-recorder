@@ -7,5 +7,6 @@
     <color name="color_top">#13dbb0</color>
     <color name="color_bottom">#0fcba5</color>
     <color name="text_shadow">#B2424040</color>
+    <color name="player_background">#2B2A2A</color>
 
 </resources>

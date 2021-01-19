@@ -46,13 +46,20 @@ public class PlayerActivity extends BaseActivity implements View.OnClickListener
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        showToolbox();
+    }
+
     private void hideToolbox() {
         toolbox.setVisibility(View.GONE);
     }
 
     private void showToolbox() {
         toolbox.setVisibility(View.VISIBLE);
-        videoView.stopPlayback();
+        if (videoView.isPlaying())
+            videoView.stopPlayback();
     }
 
     private void initVideo() {
@@ -115,6 +122,18 @@ public class PlayerActivity extends BaseActivity implements View.OnClickListener
 
                 File videoFile = new File(path);
                 Utils.shareFile(this, videoFile);
+
+                break;
+
+            case R.id.toolbox:
+            case R.id.videoView:
+
+                if (toolbox.getVisibility() == View.VISIBLE) {
+                    if (videoView.isPlaying())
+                        toolbox.setVisibility(View.GONE);
+                } else {
+                    toolbox.setVisibility(View.VISIBLE);
+                }
 
                 break;
 

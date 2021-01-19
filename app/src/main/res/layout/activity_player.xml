@@ -12,7 +12,8 @@
         android:id="@+id/videoView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:onClick="onClick" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/toolbox"
