@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        app:camera_id="front"
+        app:camera_id="back"
         app:show_fps="false" />
 
     <androidx.cardview.widget.CardView

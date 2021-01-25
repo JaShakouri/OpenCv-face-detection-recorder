@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "ir.jashakouri.opencvproject",
+  "variantName": "debug",
+  "elements": [
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "arm64-v8a"
+        }
+      ],
+      "properties": [],
+      "versionCode": 2,
+      "versionName": "1.0.1",
+      "enabled": true,
+      "outputFile": "app-arm64-v8a-debug.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "x86"
+        }
+      ],
+      "properties": [],
+      "versionCode": 2,
+      "versionName": "1.0.1",
+      "enabled": true,
+      "outputFile": "app-x86-debug.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "armeabi"
+        }
+      ],
+      "properties": [],
+      "versionCode": 2,
+      "versionName": "1.0.1",
+      "enabled": true,
+      "outputFile": "app-armeabi-debug.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "mips64"
+        }
+      ],
+      "properties": [],
+      "versionCode": 2,
+      "versionName": "1.0.1",
+      "enabled": true,
+      "outputFile": "app-mips64-debug.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "mips"
+        }
+      ],
+      "properties": [],
+      "versionCode": 2,
+      "versionName": "1.0.1",
+      "enabled": true,
+      "outputFile": "app-mips-debug.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "x86_64"
+        }
+      ],
+      "properties": [],
+      "versionCode": 2,
+      "versionName": "1.0.1",
+      "enabled": true,
+      "outputFile": "app-x86_64-debug.apk"
+    },
+    {
+      "type": "ONE_OF_MANY",
+      "filters": [
+        {
+          "filterType": "ABI",
+          "value": "armeabi-v7a"
+        }
+      ],
+      "properties": [],
+      "versionCode": 2,
+      "versionName": "1.0.1",
+      "enabled": true,
+      "outputFile": "app-armeabi-v7a-debug.apk"
+    }
+  ]
+}
