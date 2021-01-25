@@ -1,6 +1,8 @@
 # OpenCv face detection recorder
 ## This project has face detection and realtime recording
 
+<img src="https://github.com/JaShakouri/OpenCv-face-detection-recorder/blob/master/gif/face-detection.gif" />
+
 Ability of this source
 
 * Face Detection with OpenCV Library
@@ -17,6 +19,5 @@ You can download and install debug version project
 * app-x86 | [Download](https://github.com/JaShakouri/OpenCv-face-detection-recorder/tree/master/release/app-x86-debug.apk)
 * app-x86_64 | [Download](https://github.com/JaShakouri/OpenCv-face-detection-recorder/tree/master/release/app-x86_64-debug.apk)
 
-<img src="https://github.com/JaShakouri/OpenCv-face-detection-recorder/blob/master/gif/face-detection.gif" />
 
 Thank You [Kongqw](https://github.com/kongqw) and [AmirSalar Salehi](https://gitlab.com/lorevantonio)
